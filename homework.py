@@ -34,25 +34,36 @@ def get_neighbor(point):
             move = decode_dict[act_dir[i]]
             adj_node = tuple_add(point, move)
             adj_list.append(adj_node)
+
+    if point[0] == 2 and point[1] == 27 and point[2] == 16 :
+        print("-----------------0-27-16 adj_list---------------:", adj_list)
+    #print("point:",point," actions:",adj_list)
+
     return adj_list
 
 # (node,parent) dict
 # given node to find his parent
 def backtrace(node, node_dict, path, cost):
 
-
-    while (node != start):
-        if (node in node_dict):
-            line = [node[0], node[1], node[2], 1]
+    while node in node_dict:
+        if (node == start):
+            line = [node[0], node[1], node[2], 0]
             path.append(line)
+            return path, cost
+        else:
+            line = [node[0], node[1], node[2], 1]
+
+
             parent = node_dict[node]
+            if node[0] == 1 and node[1] == 28 and node[2] == 16:
+                print("1-28-16:", parent)
+
+            path.append(line)
             node = parent
             cost += 1
-        else:
-            return "FAIL"
-    line = [node[0], node[1], node[2], 0]
-    path.append(line)
-    return path, cost
+
+    return
+
 
 
 
@@ -84,6 +95,7 @@ def bfs(dim, start, end, actions):
             return "SUCCESS"
         else:
             adj_list = get_neighbor(node)
+
             for i in range(len(adj_list)):
                 if (adj_list[i] not in v_set) and (adj_list[i] not in queue) and (adj_list[i][0] < dimensions[0]) and (adj_list[i][1] < dimensions[1]) and (adj_list[i][2] < dimensions[2]):
                     queue.append(adj_list[i])
